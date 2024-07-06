@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "226717754057",
+    "firebase_url": "https://enterprisemanager-cd854-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "enterprisemanager-cd854",
+    "storage_bucket": "enterprisemanager-cd854.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:226717754057:android:4fca45e65b8b5b28f4e318",
+        "android_client_info": {
+          "package_name": "com.milfhey.enterprisemanager"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXRekmdJBT1NG8nohhquLZeaoeKnbIpfI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
