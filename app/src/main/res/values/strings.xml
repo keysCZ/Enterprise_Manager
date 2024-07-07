@@ -1,4 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
     <string name="title_crud">Ajouter une entreprise à la liste</string>
+    <string name="app_name">EnterpriseManager</string>
+    <string name="default_web_client_id">226717754057-f46emd3oiaeebfa6pei48qmhju5rdp2b.apps.googleusercontent.com</string>
 </resources>

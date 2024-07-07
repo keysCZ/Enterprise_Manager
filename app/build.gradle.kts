@@ -36,10 +36,12 @@ dependencies {
     implementation("com.google.firebase:firebase-core:21.0.0")
     implementation(platform("com.google.firebase:firebase-bom:32.1.0"))
     implementation("com.google.firebase:firebase-analytics")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
+    implementation("com.google.android.gms:play-services-auth:20.3.0")
     implementation(libs.activity)
     implementation(libs.monitor)
     implementation(libs.androidx.junit)
-    
+
 }
 
 // Appliquez le plugin Google Services

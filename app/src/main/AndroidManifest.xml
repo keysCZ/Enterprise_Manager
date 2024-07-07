@@ -18,19 +18,18 @@
             android:exported="false" />
         <activity
             android:name=".CompanyDetailActivity"
-            android:exported="false" />
+            android:theme="@style/Theme.Material3.DayNight.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".CompanyListActivity" />
+        </activity>
         <activity
             android:name=".CompanyListActivity"
             android:exported="false" />
         <activity
             android:name=".RegisterActivity"
             android:exported="false" />
-        <activity
-            android:name=".GestionEntreprisesActivity"
-            android:exported="false" />
-        <activity
-            android:name=".FicheContact"
-            android:exported="false" />
+
         <activity
             android:name=".MainActivity"
             android:exported="false" />

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -28,6 +29,7 @@ public class CompanyDetailActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_company_detail);
 
@@ -103,6 +105,32 @@ public class CompanyDetailActivity extends AppCompatActivity {
 
     public void editPhone(View view) {
         showEditDialog(phoneTextView, "Téléphone");
+    }
+
+    private void shareCompany(String userIdToShare) {
+        if (companyId != null) {
+            databaseReference.child(companyId).child("sharedWith").push().setValue(userIdToShare)
+                    .addOnCompleteListener(task -> {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(this, "Entreprise partagée avec succès", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(this, "Erreur de partage", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        }
+    }
+
+    private void addComment(String commentText) {
+        String commentId = databaseReference.child(companyId).child("comments").push().getKey();
+        Comment comment = new Comment(commentId, FirebaseAuth.getInstance().getCurrentUser().getUid(), commentText, System.currentTimeMillis());
+        databaseReference.child(companyId).child("comments").child(commentId).setValue(comment)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(this, "Commentaire ajouté avec succès", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(this, "Erreur d'ajout de commentaire", Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void showEditDialog(final TextView textView, String fieldName) {

@@ -1,5 +1,7 @@
 package com.milfhey.enterprisemanager;
 
+import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -38,7 +40,9 @@ public class CompanyAdapter extends RecyclerView.Adapter<CompanyAdapter.CompanyV
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, CompanyDetailActivity.class);
             intent.putExtra("companyId", company.getId());
-            context.startActivity(intent);
+
+            ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation((Activity) context, holder.itemView, "transition_name");
+            context.startActivity(intent, options.toBundle());
         });
     }
 

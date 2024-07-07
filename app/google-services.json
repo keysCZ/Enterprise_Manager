@@ -13,7 +13,20 @@
           "package_name": "com.milfhey.enterprisemanager"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "226717754057-121oj5ek4cluncmmki9dl80fu89qqagu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.milfhey.enterprisemanager",
+            "certificate_hash": "f661a953195194ceefa377e60711dbea334657db"
+          }
+        },
+        {
+          "client_id": "226717754057-f46emd3oiaeebfa6pei48qmhju5rdp2b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAXRekmdJBT1NG8nohhquLZeaoeKnbIpfI"
@@ -21,7 +34,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "226717754057-f46emd3oiaeebfa6pei48qmhju5rdp2b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

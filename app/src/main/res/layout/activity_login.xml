@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -44,6 +43,15 @@
         android:backgroundTint="@color/colorPrimary"
         android:textColor="@color/white"
         android:layout_marginTop="32dp" />
+
+    <Button
+        android:id="@+id/googleSignInButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Se connecter avec Google"
+        android:backgroundTint="@color/colorPrimary"
+        android:textColor="@color/white"
+        android:layout_marginTop="16dp" />
 
     <TextView
         android:id="@+id/registerTextView"
