@@ -7,7 +7,6 @@ public class Comment {
     private long timestamp;
 
     public Comment() {
-        // Constructeur vide nécessaire pour Firebase
     }
 
     public Comment(String id, String userId, String text, long timestamp) {
@@ -17,7 +16,6 @@ public class Comment {
         this.timestamp = timestamp;
     }
 
-    // Getters et Setters
     public String getId() {
         return id;
     }

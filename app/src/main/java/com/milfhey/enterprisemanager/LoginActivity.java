@@ -1,5 +1,5 @@
 package com.milfhey.enterprisemanager;
-// LoginActivity.java
+
 
 import android.content.Intent;
 import android.os.Bundle;

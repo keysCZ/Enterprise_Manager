@@ -10,11 +10,10 @@ public class Company {
     private String name;
     private String address;
     private String phone;
-    private List<String> sharedWith; // Liste des UID des utilisateurs avec qui l'entreprise est partagée
-    private Map<String, Comment> comments; // Les commentaires des utilisateurs
+    private List<String> sharedWith;
+    private Map<String, Comment> comments;
 
     public Company() {
-        // Constructeur vide nécessaire pour Firebase
     }
 
     public Company(String id, String name, String address, String phone) {
@@ -26,7 +25,7 @@ public class Company {
         this.comments = new HashMap<>();
     }
 
-    // Getters et Setters
+
     public String getId() {
         return id;
     }

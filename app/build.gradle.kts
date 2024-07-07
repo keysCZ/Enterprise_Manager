@@ -44,5 +44,4 @@ dependencies {
 
 }
 
-// Appliquez le plugin Google Services
 apply(plugin = "com.google.gms.google-services")

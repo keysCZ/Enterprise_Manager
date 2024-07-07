@@ -1,6 +1,5 @@
 package com.milfhey.enterprisemanager;
 
-
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.widget.Button;
