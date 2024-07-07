@@ -1,18 +1,18 @@
 package com.milfhey.enterprisemanager;
 
-import android.content.Intent;
+
 import android.os.Bundle;
-import android.text.InputType;
 import android.text.TextUtils;
-import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -21,130 +21,108 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
+
 public class CompanyDetailActivity extends AppCompatActivity {
-    private TextView nameTextView, addressTextView, phoneTextView;
-    private Button saveButton;
+    private TextView companyNameTextView, companyAddressTextView, companyPhoneTextView;
+    private EditText commentEditText;
+    private Button addCommentButton;
+    private RecyclerView commentsRecyclerView;
+    private CommentsAdapter commentsAdapter;
     private DatabaseReference databaseReference;
+    private List<Comment> commentList;
     private String companyId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        getWindow().requestFeature(Window.FEATURE_CONTENT_TRANSITIONS);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_company_detail);
 
-        nameTextView = findViewById(R.id.nameTextView);
-        addressTextView = findViewById(R.id.addressTextView);
-        phoneTextView = findViewById(R.id.phoneTextView);
-        saveButton = findViewById(R.id.saveButton);
+        companyNameTextView = findViewById(R.id.nameTextView);
+        companyAddressTextView = findViewById(R.id.addressTextView);
+        companyPhoneTextView = findViewById(R.id.phoneTextView);
+        commentEditText = findViewById(R.id.commentEditText);
+        addCommentButton = findViewById(R.id.addCommentButton);
+        commentsRecyclerView = findViewById(R.id.commentsRecyclerView);
 
+        commentsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        commentList = new ArrayList<>();
+        commentsAdapter = new CommentsAdapter(commentList);
+        commentsRecyclerView.setAdapter(commentsAdapter);
+
+        companyId = getIntent().getStringExtra("companyId");
         databaseReference = FirebaseDatabase.getInstance().getReference("companies")
-                .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(companyId);
 
-        Intent intent = getIntent();
-        companyId = intent.getStringExtra("companyId");
-        if (companyId != null) {
-            loadCompanyDetails();
-        }
+        addCommentButton.setOnClickListener(v -> addComment());
 
-        saveButton.setOnClickListener(v -> saveCompany());
+        loadCompanyDetails();
+        loadComments();
     }
 
     private void loadCompanyDetails() {
-        databaseReference.child(companyId).addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Company company = dataSnapshot.getValue(Company.class);
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Company company = snapshot.getValue(Company.class);
                 if (company != null) {
-                    nameTextView.setText(company.getName());
-                    addressTextView.setText(company.getAddress());
-                    phoneTextView.setText(company.getPhone());
+                    companyNameTextView.setText(company.getName());
+                    companyAddressTextView.setText(company.getAddress());
+                    companyPhoneTextView.setText(company.getPhone());
                 }
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(CompanyDetailActivity.this, "Erreur de chargement des données", Toast.LENGTH_SHORT).show();
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(CompanyDetailActivity.this, "Erreur de chargement des détails de l'entreprise", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    private void saveCompany() {
-        String name = nameTextView.getText().toString().trim();
-        String address = addressTextView.getText().toString().trim();
-        String phone = phoneTextView.getText().toString().trim();
-
-        if (TextUtils.isEmpty(name) || TextUtils.isEmpty(address) || TextUtils.isEmpty(phone)) {
-            Toast.makeText(this, "Veuillez remplir tous les champs", Toast.LENGTH_SHORT).show();
+    private void addComment() {
+        String commentText = commentEditText.getText().toString().trim();
+        if (TextUtils.isEmpty(commentText)) {
+            Toast.makeText(this, "Veuillez entrer un commentaire", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        if (companyId == null) {
-            companyId = databaseReference.push().getKey();
-        }
+        String commentId = databaseReference.child("comments").push().getKey();
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        Comment comment = new Comment(commentId, userId, commentText, System.currentTimeMillis());
 
-        Company company = new Company(companyId, name, address, phone);
-        databaseReference.child(companyId).setValue(company)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        Toast.makeText(this, "Entreprise enregistrée avec succès", Toast.LENGTH_SHORT).show();
-                        finish();
-                    } else {
-                        Toast.makeText(this, "Erreur d'enregistrement", Toast.LENGTH_SHORT).show();
-                    }
-                });
-    }
-
-    public void editName(View view) {
-        showEditDialog(nameTextView, "Nom");
-    }
-
-    public void editAddress(View view) {
-        showEditDialog(addressTextView, "Adresse");
-    }
-
-    public void editPhone(View view) {
-        showEditDialog(phoneTextView, "Téléphone");
-    }
-
-    private void shareCompany(String userIdToShare) {
-        if (companyId != null) {
-            databaseReference.child(companyId).child("sharedWith").push().setValue(userIdToShare)
+        if (commentId != null) {
+            databaseReference.child("comments").child(commentId).setValue(comment)
                     .addOnCompleteListener(task -> {
                         if (task.isSuccessful()) {
-                            Toast.makeText(this, "Entreprise partagée avec succès", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this, "Commentaire ajouté", Toast.LENGTH_SHORT).show();
+                            commentEditText.setText("");
                         } else {
-                            Toast.makeText(this, "Erreur de partage", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this, "Erreur d'ajout du commentaire", Toast.LENGTH_SHORT).show();
                         }
                     });
         }
     }
 
-    private void addComment(String commentText) {
-        String commentId = databaseReference.child(companyId).child("comments").push().getKey();
-        Comment comment = new Comment(commentId, FirebaseAuth.getInstance().getCurrentUser().getUid(), commentText, System.currentTimeMillis());
-        databaseReference.child(companyId).child("comments").child(commentId).setValue(comment)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        Toast.makeText(this, "Commentaire ajouté avec succès", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(this, "Erreur d'ajout de commentaire", Toast.LENGTH_SHORT).show();
+    private void loadComments() {
+        databaseReference.child("comments").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                commentList.clear();
+                for (DataSnapshot commentSnapshot : snapshot.getChildren()) {
+                    Comment comment = commentSnapshot.getValue(Comment.class);
+                    if (comment != null) {
+                        commentList.add(comment);
                     }
-                });
-    }
+                }
+                commentsAdapter.notifyDataSetChanged();
+            }
 
-    private void showEditDialog(final TextView textView, String fieldName) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Modifier " + fieldName);
-
-        final EditText input = new EditText(this);
-        input.setInputType(InputType.TYPE_CLASS_TEXT);
-        input.setText(textView.getText().toString());
-        builder.setView(input);
-
-        builder.setPositiveButton("OK", (dialog, which) -> textView.setText(input.getText().toString()));
-        builder.setNegativeButton("Annuler", (dialog, which) -> dialog.cancel());
-
-        builder.show();
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(CompanyDetailActivity.this, "Erreur de chargement des commentaires", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

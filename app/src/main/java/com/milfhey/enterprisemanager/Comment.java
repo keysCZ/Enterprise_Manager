@@ -3,17 +3,17 @@ package com.milfhey.enterprisemanager;
 public class Comment {
     private String id;
     private String userId;
-    private String commentText;
+    private String text;
     private long timestamp;
 
     public Comment() {
         // Constructeur vide nécessaire pour Firebase
     }
 
-    public Comment(String id, String userId, String commentText, long timestamp) {
+    public Comment(String id, String userId, String text, long timestamp) {
         this.id = id;
         this.userId = userId;
-        this.commentText = commentText;
+        this.text = text;
         this.timestamp = timestamp;
     }
 
@@ -34,12 +34,12 @@ public class Comment {
         this.userId = userId;
     }
 
-    public String getCommentText() {
-        return commentText;
+    public String getText() {
+        return text;
     }
 
-    public void setCommentText(String commentText) {
-        this.commentText = commentText;
+    public void setText(String text) {
+        this.text = text;
     }
 
     public long getTimestamp() {
@@ -50,4 +50,3 @@ public class Comment {
         this.timestamp = timestamp;
     }
 }
-

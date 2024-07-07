@@ -2,6 +2,8 @@ package com.milfhey.enterprisemanager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Company {
     private String id;
@@ -9,6 +11,7 @@ public class Company {
     private String address;
     private String phone;
     private List<String> sharedWith; // Liste des UID des utilisateurs avec qui l'entreprise est partagée
+    private Map<String, Comment> comments; // Les commentaires des utilisateurs
 
     public Company() {
         // Constructeur vide nécessaire pour Firebase
@@ -20,6 +23,7 @@ public class Company {
         this.address = address;
         this.phone = phone;
         this.sharedWith = new ArrayList<>();
+        this.comments = new HashMap<>();
     }
 
     // Getters et Setters
@@ -61,6 +65,14 @@ public class Company {
 
     public void setSharedWith(List<String> sharedWith) {
         this.sharedWith = sharedWith;
+    }
+
+    public Map<String, Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Map<String, Comment> comments) {
+        this.comments = comments;
     }
 
     public void shareWith(String uid) {
