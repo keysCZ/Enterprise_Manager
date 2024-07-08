@@ -40,7 +40,7 @@ public class CompanyListActivity extends AppCompatActivity {
     private DatabaseReference databaseReference;
     private List<Company> companyList;
     private List<Company> filteredList;
-    private androidx.appcompat.widget.SearchView searchView;
+    private SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

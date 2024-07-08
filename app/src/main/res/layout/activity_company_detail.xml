@@ -1,132 +1,64 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="@color/white"
     tools:context=".CompanyDetailActivity">
 
-    <ImageButton
-        android:id="@+id/backButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_arrow_back"
-        android:contentDescription="Retour"
-        android:background="?attr/selectableItemBackground"
-        android:onClick="onBackPressed" />
-
-    <LinearLayout
+    <EditText
+        android:id="@+id/nameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="16dp">
+        android:hint="Nom de l'entreprise"
+        android:inputType="text" />
 
-        <TextView
-            android:id="@+id/nameTextView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Nom de l'entreprise"
-            android:textSize="18sp"
-            android:textColor="@color/black" />
-
-        <ImageView
-            android:id="@+id/editNameIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_edit"
-            android:contentDescription="Modifier"
-            android:padding="8dp"
-            android:onClick="editName" />
-    </LinearLayout>
-
-    <LinearLayout
+    <EditText
+        android:id="@+id/addressEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="16dp">
+        android:hint="Adresse de l'entreprise"
+        android:inputType="textPostalAddress"
+        android:layout_marginTop="16dp" />
 
-        <TextView
-            android:id="@+id/addressTextView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Adresse de l'entreprise"
-            android:textSize="18sp"
-            android:textColor="@color/black" />
-
-        <ImageView
-            android:id="@+id/editAddressIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_edit"
-            android:contentDescription="Modifier"
-            android:padding="8dp"
-            android:onClick="editAddress" />
-    </LinearLayout>
-
-    <LinearLayout
+    <EditText
+        android:id="@+id/phoneEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="16dp">
-
-        <TextView
-            android:id="@+id/phoneTextView"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Téléphone de l'entreprise"
-            android:textSize="18sp"
-            android:textColor="@color/black" />
-
-        <ImageView
-            android:id="@+id/editPhoneIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_edit"
-            android:contentDescription="Modifier"
-            android:padding="8dp"
-            android:onClick="editPhone" />
-    </LinearLayout>
+        android:hint="Téléphone de l'entreprise"
+        android:inputType="phone"
+        android:layout_marginTop="16dp" />
 
     <Button
         android:id="@+id/saveButton"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sauvegarder"
+        android:text="Ajouter"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="32dp"
         android:backgroundTint="@color/colorPrimary"
-        android:textColor="@color/white"
-        android:layout_marginTop="32dp" />
+        android:textColor="@color/white" />
 
     <TextView
-        android:id="@+id/commentsLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Commentaires"
-        android:layout_below="@id/saveButton"
-        android:layout_marginTop="16dp"
         android:textSize="18sp"
-        android:textColor="@color/black" />
+        android:layout_marginTop="16dp" />
 
     <EditText
         android:id="@+id/commentEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Ajouter un commentaire"
-        android:layout_below="@id/commentsLabel"
-        android:layout_marginTop="8dp"
-        android:padding="16dp"
-        android:background="@drawable/edit_text_background" />
+        android:layout_marginTop="8dp" />
 
     <Button
         android:id="@+id/addCommentButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Ajouter"
-        android:layout_below="@id/commentEditText"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="8dp"
         android:backgroundTint="@color/colorPrimary"
         android:textColor="@color/white" />
@@ -135,7 +67,5 @@
         android:id="@+id/commentsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/addCommentButton"
         android:layout_marginTop="16dp" />
 </LinearLayout>
-
